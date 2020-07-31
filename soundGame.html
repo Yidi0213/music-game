@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SG</title>
+    <script type="text/javascript" src="paper-full.js"></script>
+    <script type="text/javascript" src="howler.min.js"></script>
+    <link rel="stylesheet" href="circle.css">
+    <script type="text/paperscript" canvas="myCanvas">
+        var data = {
+            a: 'bubbles',
+            b: 'clay',
+            c:'confetti',
+            d:'corona',
+            e:'dotted-spiral',
+            f:'flash-1',
+            g:'flash-2',
+            h:'flash-3',
+            i:'glimmer',
+            j:'moon',
+            k:'pinwheel',
+            l:'piston-1',
+            m:'piston-2',
+            n:'piston-3',
+            o:'prism-1',
+            p:'prism-2',
+            q:'prism-3',
+            r:'splits',
+            s:'squiggle',
+            t:'strike',
+            u:'suspension',
+            v:'timer',
+            w:'ufo',
+            x:'veil',
+            y:'wipe',
+            z:'zig-zag'
+        };
+        var circles = [];
+        function onKeyDown(event) {
+            if (data[event.key]){
+                // get a random location in the screen
+                var randomPoint = Point.random();
+                var maxPoint = new Point(view.size.width,view.size.height);
+                var finalPoint = randomPoint * maxPoint;
+                var circle = new Path.Circle(finalPoint,450)
+                //filling the circle with random color
+                circle.fillColor = Color.random();
+                // push the circle to the array
+                circles.push(circle);
+                new Howl({
+                    src: ['sounds/' + data[event.key] + '.mp3']
+                }).play();
+            }
+        }
+
+        //animations
+        function onFrame(event) {
+            for(var i = 0; i < circles.length;i++){
+                circles[i].fillColor.hue += 1.5;
+                circles[i].scale(.9);
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
